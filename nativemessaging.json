@@ -3,5 +3,5 @@
   "description": "-",
   "path": "nativemessaging.cmd",
   "type": "stdio",
-  "allowed_origins": ["chrome-extension://jkcejkcgohjfpfhmcpmgoekapgkbldnd/"]
+  "allowed_origins": ["chrome-extension://ocfemonneiipbbaebbhofoelmlpgdlkp/"]
 }
