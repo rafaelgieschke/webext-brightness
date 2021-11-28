@@ -1,0 +1,7 @@
+{
+  "name": "brightness_volume_changer",
+  "description": "-",
+  "path": "nativemessaging.cmd",
+  "type": "stdio",
+  "allowed_origins": ["chrome-extension://jkcejkcgohjfpfhmcpmgoekapgkbldnd/"]
+}
