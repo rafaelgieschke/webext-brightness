@@ -3,7 +3,7 @@
 
 ################################################################################
 
-# SPDX-FileCopyrightText: Based on https://stackoverflow.com/a/19348221: Copyright 2021 Alex Jasmin
+# SPDX-FileCopyrightText: Based on <https://stackoverflow.com/a/19348221>: Copyright 2021 Alex Jasmin
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 Add-Type -TypeDefinition @'
@@ -54,7 +54,7 @@ public class Audio {
 
 ################################################################################
 
-# SPDX-FileCopyrightText: Based on https://github.com/hmemcpy/ChromeRegJump/blob/3c388afcc064b71bfe3dc71e286cc48512378c29/src/host/nativehost.ps1: Copyright 2015 Igal Tabachnik
+# SPDX-FileCopyrightText: Based on <https://github.com/hmemcpy/ChromeRegJump/blob/3c388afcc064b71bfe3dc71e286cc48512378c29/src/host/nativehost.ps1>: Copyright 2015 Igal Tabachnik
 # SPDX-License-Identifier: MIT
 
 $reader = New-Object System.IO.BinaryReader([System.Console]::OpenStandardInput())
