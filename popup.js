@@ -28,11 +28,7 @@ function save() {
 window.brightness.onchange = (ev) => {
   brightness.abort();
   save();
-  chrome.runtime.sendNativeMessage(
-    name,
-    { brightness: ev.target.value },
-    close
-  );
+  chrome.runtime.sendNativeMessage(name, { brightness: ev.target.value });
 };
 
 window.volume.onchange = (ev) => {
