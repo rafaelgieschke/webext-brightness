@@ -9,6 +9,7 @@ document.querySelector("#close").onclick = (ev) => window.close();
 chrome.runtime.sendNativeMessage(name, {}, (res) => {
   if (!brightness.signal.aborted) window.brightness.value = res.brightness;
   if (!volume.signal.aborted) window.volume.value = res.volume;
+  save();
 });
 
 function load() {
