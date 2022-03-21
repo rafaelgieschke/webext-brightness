@@ -58,7 +58,9 @@ public class Audio {
 # SPDX-License-Identifier: MIT
 
 $reader = New-Object System.IO.BinaryReader([System.Console]::OpenStandardInput())
-$len = $reader.ReadInt32()
+$writer = New-Object System.IO.BinaryWriter([System.Console]::OpenStandardOutput())
+
+while ($len = $reader.ReadInt32()) {
 $obj = [System.Text.Encoding]::UTF8.GetString($reader.ReadBytes($len)) | ConvertFrom-Json
 
 if ($obj.brightness) {
@@ -72,6 +74,6 @@ if ($obj.volume) {
 $obj = @{brightness = (Get-Ciminstance -Namespace root/WMI -ClassName WmiMonitorBrightness).CurrentBrightness; volume = [Audio]::Volume }
 
 $msg = $obj | ConvertTo-Json
-$writer = New-Object System.IO.BinaryWriter([System.Console]::OpenStandardOutput())
 $writer.Write([int]$msg.Length)
 $writer.Write([System.Text.Encoding]::UTF8.GetBytes($msg))
+}

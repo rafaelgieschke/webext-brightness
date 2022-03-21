@@ -6,9 +6,17 @@ load();
 
 document.querySelector("#close").onclick = (ev) => window.close();
 
-chrome.runtime.sendNativeMessage(name, {}, (res) => {
+const port = chrome.runtime.connectNative(name);
+const queue = [];
+port.onMessage.addListener((msg) => queue.shift()(msg));
+const send = (msg) => (
+  port.postMessage(msg), new Promise((r) => queue.push(r))
+);
+
+send({}).then((res) => {
   if (!brightness.signal.aborted) window.brightness.value = res.brightness;
   if (!volume.signal.aborted) window.volume.value = res.volume;
+  document.body.style.backgroundColor = "";
   save();
 });
 
@@ -28,11 +36,11 @@ function save() {
 window.brightness.onchange = (ev) => {
   brightness.abort();
   save();
-  chrome.runtime.sendNativeMessage(name, { brightness: ev.target.value });
+  send({ brightness: ev.target.value });
 };
 
 window.volume.onchange = (ev) => {
   volume.abort();
   save();
-  chrome.runtime.sendNativeMessage(name, { volume: ev.target.value });
+  send({ volume: ev.target.value });
 };
