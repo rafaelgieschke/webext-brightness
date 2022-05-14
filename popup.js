@@ -2,6 +2,57 @@ const name = "brightness_volume_changer";
 const brightness = new AbortController();
 const volume = new AbortController();
 
+customElements.define(
+  "x-input",
+  class extends HTMLElement {
+    constructor() {
+      super();
+      const shadow = (this._shadow = this.attachShadow({ mode: "open" }));
+      shadow.innerHTML = `
+      <style>
+      :host { display: flex; align-items: stretch; }
+      input { flex-grow: 1; }
+      span { align-self: center; width: 3ch; }
+      </style>
+      <input><span>?</span>
+    `;
+      this._input = shadow.querySelector("input");
+      this._span = shadow.querySelector("span");
+      ["type", "min", "max", "step"].forEach((v) =>
+        this._input.setAttribute(v, this.getAttribute(v))
+      );
+      this.displayFactor = Number(this.getAttribute("display-factor")) || 1;
+      this._input.addEventListener("input", () => this._update());
+      this._update();
+    }
+    _update() {
+      this._span.textContent = Math.round(
+        this.valueAsNumber * this.displayFactor
+      );
+    }
+    set value(v) {
+      this._input.value = v;
+      this._update();
+    }
+    get value() {
+      return this._input.value;
+    }
+    set valueAsNumber(v) {
+      this._input.valueAsNumber = v;
+      this._update();
+    }
+    get valueAsNumber() {
+      return this._input.valueAsNumber;
+    }
+    set onchange(v) {
+      this._input.onchange = v;
+    }
+    get onchange() {
+      return this._input.onchange;
+    }
+  }
+);
+
 load();
 
 document.querySelector("#close").onclick = (ev) => window.close();
