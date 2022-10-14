@@ -93,5 +93,8 @@ window.brightness.onchange = (ev) => {
 window.volume.onchange = (ev) => {
   volume.abort();
   save();
-  send({ volume: ev.target.value });
+  send({
+    volume: ev.target.value,
+    ...(ev.target.valueAsNumber && { mute: false }),
+  });
 };

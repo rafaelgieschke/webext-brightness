@@ -63,15 +63,18 @@ $writer = New-Object System.IO.BinaryWriter([System.Console]::OpenStandardOutput
 while ($len = $reader.ReadInt32()) {
 $obj = [System.Text.Encoding]::UTF8.GetString($reader.ReadBytes($len)) | ConvertFrom-Json
 
-if ($obj.brightness) {
+if ($obj.brightness -ne $null) {
   # https://docs.microsoft.com/en-us/windows/win32/wmicoreprov/wmisetbrightness-method-in-class-wmimonitorbrightnessmethods
   (Get-WmiObject -Namespace root\wmi -Class WmiMonitorBrightnessMethods).wmisetbrightness(0, $obj.brightness)
 }
-if ($obj.volume) {
+if ($obj.mute -ne $null) {
+  [Audio]::Mute = $obj.mute
+}
+if ($obj.volume -ne $null) {
   [Audio]::Volume = $obj.volume
 }
 # https://docs.microsoft.com/en-us/windows/win32/wmicoreprov/wmimonitorbrightness
-$obj = @{brightness = (Get-Ciminstance -Namespace root/WMI -ClassName WmiMonitorBrightness).CurrentBrightness; volume = [Audio]::Volume }
+$obj = @{brightness = (Get-Ciminstance -Namespace root/WMI -ClassName WmiMonitorBrightness).CurrentBrightness; volume = [Audio]::Volume; mute = [Audio]::Mute }
 
 $msg = $obj | ConvertTo-Json
 $writer.Write([int]$msg.Length)
