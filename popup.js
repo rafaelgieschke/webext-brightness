@@ -59,9 +59,9 @@ document.querySelector("#close").onclick = (ev) => window.close();
 
 const port = chrome.runtime.connectNative(name);
 const queue = [];
-port.onMessage.addListener((msg) => queue.shift()(msg));
+port.onMessage.addListener((msg) => (console.log(msg), queue.shift()(msg)));
 const send = (msg) => (
-  port.postMessage(msg), new Promise((r) => queue.push(r))
+  console.log(msg), port.postMessage(msg), new Promise((r) => queue.push(r))
 );
 
 send({}).then((res) => {
